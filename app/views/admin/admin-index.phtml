@@ -1,0 +1,167 @@
+<?php include 'app/views/admin/includes/admin-header.phtml'; ?>
+<div class="tm-home-img-container" style="background-image: url('<?php echo $this->view_data['headImage'];?>');" id="header">
+    <img src="/app/helpers/img/tm-home-img.jpg" alt="Image" class="hidden-lg-up img-fluid">
+</div>
+    <div class="input-group mb-3">
+        <input type="file" class="custom-file-input" id="index"><br>
+        <button onclick="saveHeadImage('index')">save</button>
+    </div>
+<section class="tm-section">
+    <div class="container-fluid" id="intro">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
+                <h2 class="tm-gold-text tm-title head"><?php echo $this->view_data['intro'][0]['title'];?></h2>
+                <button onclick="edit('head')">edit</button>
+                <button onclick="save('head')">save</button>
+                <p class="tm-subtitle head"><?php echo $this->view_data['intro'][0]['content'];?></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                <div class="tm-content-box">
+                    <img src="<?php echo $this->view_data['intro'][1]['image'] ?>" alt="Image" class="tm-margin-b-20 img-fluid">
+                    <div class="input-group mb-3">
+
+                            <input type="file" class="custom-file-input" id="content1" name="content1">
+                            <label class="custom-file-label" for="content1">Choose file</label>
+                    </div>
+                    <h4 class="tm-margin-b-20 tm-gold-text content1"><?php echo $this->view_data['intro']['1']['title']; ?></h4>
+                    <p class="tm-margin-b-20 content1"><?php echo $this->view_data['intro']['1']['content']; ?></p>
+                    <button onclick="edit('content1')">edit</button>
+                    <button onclick="save('content1')">save</button>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                <div class="tm-content-box">
+                    <img src="<?php echo $this->view_data['intro'][2]['image'] ?>" alt="Image" class="tm-margin-b-20 img-fluid">
+                    <div class="input-group mb-3">
+
+                        <input type="file" class="custom-file-input" id="content2" name="content1">
+                        <label class="custom-file-label" for="content2">Choose file</label>
+                    </div>
+                    <h4 class="tm-margin-b-20 tm-gold-text content2"><?php echo $this->view_data['intro']['2']['title'];?></h4>
+                    <p class="tm-margin-b-20 content2"><?php echo $this->view_data['intro']['2']['content']; ?></p>
+                    <button onclick="edit('content2')">edit</button>
+                    <button onclick="save('content2')">save</button>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                <div class="tm-content-box">
+                    <img src="<?php echo $this->view_data['intro'][3]['image'] ?>" alt="Image" class="tm-margin-b-20 img-fluid">
+                    <div class="input-group mb-3">
+
+                        <input type="file" class="custom-file-input" id="content3" name="content1">
+                        <label class="custom-file-label" for="content3">Choose file</label>
+                    </div>
+                    <h4 class="tm-margin-b-20 tm-gold-text content3"><?php echo $this->view_data['intro']['3']['title']; ?></h4>
+                    <p class="tm-margin-b-20 content3"><?php echo $this->view_data['intro']['3']['content']; ?></p>
+                    <button onclick="edit('content3')">edit</button>
+                    <button onclick="save('content3')">save</button>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                <div class="tm-content-box">
+                    <img src="<?php echo $this->view_data['intro'][4]['image'] ?>" alt="Image" class="tm-margin-b-20 img-fluid">
+                    <div class="input-group mb-3">
+
+                        <input type="file" class="custom-file-input" id="content4" name="content1">
+                        <label class="custom-file-label" for="content4">Choose file</label>
+                    </div>
+                    <h4 class="tm-margin-b-20 tm-gold-text content4"><?php echo $this->view_data['intro']['4']['title']; ?></h4>
+                    <p class="tm-margin-b-20 content4"><?php echo $this->view_data['intro']['4']['content']; ?></p>
+                    <button onclick="edit('content4')">edit</button>
+                    <button onclick="save('content4')">save</button>
+                </div>
+
+            </div>
+        </div> <!-- row -->
+
+    </div>
+</section>
+<script>
+    function saveHeadImage(id){
+        var Img = document.getElementById(id);
+        const data = new FormData();
+        data.append("headerImg", Img.files[0]);
+        data.append("headId", id);
+        console.log(Img.files);
+        $.ajax({
+            type: 'POST',
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+
+                alert(data);
+                    setTimeout(function(){// wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 500);
+
+
+            }
+        });
+        document.getElementById(id).value ='';
+    }
+
+    function edit(id) {
+        $('.'+id).summernote({focus: true,height: 150});
+    };
+
+    function save(id) {
+        var text = [];
+        $('.' + id).each(function (index) {
+            text[index] = $(this).summernote('code');
+            console.log(text);
+            $(this).summernote('destroy');
+
+        });
+        switch (id) {
+
+            case 'head':
+                $.ajax({
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        title: text[0],
+                        summary: text[1]
+                    },
+                    success: function (data) {
+                        alert(data);
+                        $("#intro").load(location.href + " #intro");
+                    }
+                });
+                break;
+            default :
+                var logoImg = document.getElementById(id);
+                const data = new FormData();
+                data.append("file", logoImg.files[0]);
+                //console.log(logoImg.files);
+                data.append("id", id);
+                data.append("title", text[0]);
+                data.append("summary", text[1]);
+                $.ajax({
+                    type: 'POST',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+
+                        alert(data);
+                        $("#intro").load(location.href + " #intro");
+                    }
+                });
+        }
+        document.getElementById(id).value ='';
+    };
+</script>
+<?php include 'app/views/includes/footer.phtml'?>

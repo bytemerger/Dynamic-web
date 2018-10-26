@@ -1,0 +1,54 @@
+<?php include 'app/views/includes/header.phtml'?>
+
+<div class="tm-blog-img-container" style="background-image: url('<?php echo $this->view_data['headImage'];?>');">
+
+</div>
+
+<section class="tm-section">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9">
+                <div class="tm-blog-post">
+                    <h3 class="tm-gold-text"><?php echo $this->view_data['post']['title'] ?></h3>
+                    <p><?php echo $this->view_data['post']['summary'] ?></p>
+
+                    <p class="pubDate">Published on <?php echo date('j F Y', $this->view_data['post']['publicationDate'])?></p>
+                    <p>in <?php foreach ($this->view_data['categories_in'] as $item){?>
+                    <a href="<?php echo '/home/blog/'.$item;?>"><?php echo $item.'&nbsp';?></a>
+
+                        <?php } ?>
+                    </p>
+                    <img src="<?php echo $this->view_data['post']['image'] ?>" alt="Image" class="img-fluid tm-img-post">
+
+                    <p>
+                        <?php echo $this->view_data['post']['content'] ?>
+                    </p>
+                </div>
+
+            </div>
+
+            <aside class="col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 tm-aside-r">
+
+                <div class="tm-aside-container">
+                    <h3 class="tm-gold-text tm-title">
+                        Categories
+                    </h3>
+                    <nav>
+                        <ul class="nav">
+                        <?php foreach ($this->view_data['categories'] as $category){?>
+                            <li><a href="<?php echo '/home/blog/'.$category;?>" class="tm-text-link"><?php echo str_replace('-',' ',$category) ?></a></li>
+                            <?php }?>
+                        </ul>
+                    </nav>
+
+                </div>
+
+
+            </aside>
+
+        </div>
+
+    </div>
+</section>
+<?php include 'app/views/includes/footer.phtml'?>

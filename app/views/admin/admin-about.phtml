@@ -1,0 +1,34 @@
+<?php include 'app/views/admin/includes/admin-header.phtml'; ?>
+<div class="tm-about-img-container" style="background-image: url('<?php echo $this->view_data['headImage'];?>');">
+</div>
+<div class="input-group mb-3">
+    <input type="file" class="custom-file-input" id="aboutUs"><br>
+    <button onclick="saveHeadImage('aboutUs')">save</button>
+</div>
+
+<section class="tm-section">
+    <div class="container-fluid" id="about">
+        <div class="row tm-2-rows-sm-swap">
+
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9 col-xl-9 tm-2-rows-sm-down-1">
+                <h3 class="tm-gold-text 1"><?php echo $this->view_data['aboutUs'][0]['header']?></h3>
+                <p class="1"><?php echo $this->view_data['aboutUs'][0]['keywords']?></p>
+                <p class="1"><?php echo $this->view_data['aboutUs'][0]['content']?></p>
+            </div>
+        </div>
+        <button onclick="edit('1')">edit</button>
+        <button onclick="save('1')">save</button>
+
+        <div class="row tm-margin-t-mid">
+            <div class="col-xs-12">
+                <h3 class="tm-gold-text 2"><?php echo $this->view_data['aboutUs'][1]['header']?></h3>
+                <p class="2"><?php echo $this->view_data['aboutUs'][1]['keywords']?></p>
+                <p class="2"><?php echo $this->view_data['aboutUs'][1]['content']?></p>
+            </div>
+            <button onclick="edit('2')">edit</button>
+            <button onclick="save('2')">save</button>
+        </div>
+    </div>
+</section>
+<script src="/app/helpers/js/aboutUs.js"></script>
+    <?php include 'app/views/includes/footer.phtml'?>
